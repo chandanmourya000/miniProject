@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Updates - Accommodation Portal</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+            --section-bg: #ffffff;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --accent-color: #0073e6;
+            --secondary-accent: #990000;
+            --success-color: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: var(--primary-gradient);
+            color: white;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+        }
+        
+        #vlogForm {
+            display: flex;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: var(--section-bg);
+            position: relative;
+        }
+        
+        #vlogForm input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--section-bg);
+        }
+        
+        #vlogForm input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+        
+        #vlogForm button {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        #vlogForm button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        #vlogForm button i {
+            margin-right: 8px;
+        }
+        
+        #vlogList {
+            list-style-type: none;
+        }
+        
+        #vlogList li {
+            background-color: var(--section-bg);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #vlogList li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+        
+        #vlogList li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        #vlogList li strong {
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .vlog-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .vlog-meta i {
+            margin-right: 0.5rem;
+            color: var(--accent-color);
+        }
+        
+        .author {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .timestamp {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timestamp i {
+            margin-right: 5px;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            padding: 0.9rem 1.8rem;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        .no-vlogs {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .no-vlogs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+        
+        .no-vlogs i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1.5rem 1rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            #vlogForm {
+                flex-direction: column;
+            }
+            
+            #vlogForm button {
+                padding: 0.8rem;
+            }
+            
+            .back-link {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Campus Updates</h2>
+        <p>Share and stay informed about the latest news and events</p>
+    </header>
+
+    <div class="navigation">
+        <a href="<%= user && user.role === 'admin' ? '/admindashboard' : '/userdashboard' %>" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+
+    <form id="vlogForm">
+        <input type="text" id="title" placeholder="What's new in campus? Share updates, events or alerts..." required />
+        <button type="submit"><i class="fas fa-paper-plane"></i> Post</button>
+    </form>
+    
+    <ul id="vlogList">
+        <% if (vlogs.length === 0) { %>
+            <div class="no-vlogs">
+                <i class="fas fa-clipboard"></i>
+                <p>No updates yet. Be the first to post!</p>
+            </div>
+        <% } else { %>
+            <% vlogs.forEach(function(vlog) { %>
+                <li>
+                    <strong><%= vlog.title %></strong>
+                    <div class="vlog-meta">
+                        <i class="fas fa-user"></i>
+                        <span class="author"><%= vlog.author %></span>
+                        <span class="timestamp"><i class="far fa-clock"></i> <%= vlog.timestamp.toLocaleString() %></span>
+                    </div>
+                </li>
+            <% }) %>
+        <% } %>
+    </ul>
+    
+    <script>
+        const currentUsername = "<%= username %>";
+    </script>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/vlog.js"></script>
+    <script src="/notifications.js"></script>
+</body>
+</html>

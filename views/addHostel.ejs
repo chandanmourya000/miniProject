@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Hostel - Accommodation Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet"  href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"/>
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+            --section-bg: #ffffff;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --accent-color: #0073e6;
+            --secondary-accent: #990000;
+            --success-color: #28a745;
+            --success-gradient: linear-gradient(to right, #28a745, #20c997);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .form-header p {
+            opacity: 0.9;
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 115, 230, 0.1);
+            outline: none;
+            background-color: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            background-color: #f9f9f9;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-top: 8px;
+            border: 1px solid #e6e6e6;
+        }
+
+        .checkbox-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            accent-color: var(--accent-color);
+        }
+
+        .checkbox-item label {
+            margin-bottom: 0;
+            font-weight: normal;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(0, 115, 230, 0.2);
+            color: var(--text-primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+
+        .instruction {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        button[type="submit"] {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        button[type="submit"] i {
+            margin-right: 10px;
+        }
+
+        .form-footer {
+            padding: 20px 30px;
+            background-color: #f5f7fa;
+            text-align: center;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        /* Navigation button to return to dashboard */
+        .back-link {
+            display: inline-block;
+            margin: 0 auto 30px;
+            padding: 12px 25px;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .back-link-container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        /* Page header */
+        .page-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .page-header h1 {
+            font-size: 24px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                margin: 10px auto;
+            }
+            
+            .form-header {
+                padding: 20px;
+            }
+            
+            .form-body {
+                padding: 20px;
+            }
+            
+            .page-header {
+                margin-bottom: 20px;
+                padding: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-container {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Add Your Hostel Listing</h1>
+    </div>
+    
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Hostel Details</h2>
+            <p>Provide information about your accommodation to help students find the perfect place</p>
+        </div>
+        
+        <form action="/addHostel" method="POST" class="form-body">
+            <div class="form-group">
+                <label for="hostelName"><i class="fas fa-building"></i> Hostel Name</label>
+                <input type="text" id="hostelName" name="hostelName" placeholder="Enter hostel name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="price"><i class="fas fa-rupee-sign"></i> Price (per month)</label>
+                <input type="number" id="price" name="price" placeholder="Enter price in ₹" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="category"><i class="fas fa-tag"></i> Category</label>
+                <select name="category" id="category" required>
+                    <option value="">-- Select Category --</option>
+                    <option value="Boys Hostel">Boys Hostel</option>
+                    <option value="Girls Hostel">Girls Hostel</option>
+                    <option value="Apartment">Apartment</option>
+                    <option value="PG">PG</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact"><i class="fas fa-phone"></i> Hostel Contact Number</label>
+                <input type="text" name="contact" id="contact" placeholder="Enter contact number" required>
+            </div>
+            
+            <div class="form-group">
+                <h3 class="section-title">Room Types Available</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="single" name="sharing[]" value="Single">
+                        <label for="single">Single Room</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="double" name="sharing[]" value="Double">
+                        <label for="double">Double Sharing</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="triple" name="sharing[]" value="Triple">
+                        <label for="triple">Triple Sharing</label>
+                    </div>
+                </div>
+            </div>
+            <h3>📍 Select Hostel Location on Map</h3>
+            <div id="map" style="height: 400px; width: 100%;"></div>
+            
+            <input type="hidden" name="latitude" id="latitude">
+            <input type="hidden" name="longitude" id="longitude">
+            <input type="text" id="address-input" placeholder="Hostel Address" readonly />
+
+            <div class="form-group">
+                <label for="address"><i class="fas fa-map-marker-alt"></i> Address</label>
+                <textarea id="address" name="address" placeholder="Enter complete address with landmarks" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="description"><i class="fas fa-info-circle"></i> About the Hostel</label>
+                <textarea id="description" name="description" placeholder="Describe your hostel, its environment, and unique features" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <h3 class="section-title">Facilities & Amenities</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="wifi" name="facilities[]" value="WiFi">
+                        <label for="wifi">WiFi</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mess" name="facilities[]" value="Mess">
+                        <label for="mess">Mess</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="geyser" name="facilities[]" value="Geyser">
+                        <label for="geyser">Geyser</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="waterpurifier" name="facilities[]" value="Water Purifier">
+                        <label for="waterpurifier">Water Purifier</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="washingmachine" name="facilities[]" value="Washing Machine">
+                        <label for="washingmachine">Washing Machine</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ac" name="facilities[]" value="Air Conditioner">
+                        <label for="ac">Air Conditioner</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit"><i class="fas fa-check-circle"></i> Submit Hostel Details</button>
+        </form>
+        
+        <div class="form-footer">
+            All information provided will be verified before listing
+        </div>
+    </div>
+    
+    <div class="back-link-container">
+        <a href="<%= user && user.role === 'admin' ? '/admindashboard' : '/userdashboard' %>" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+    </div>
+</body>
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+<script>
+  // Initialize the map
+  var map = L.map('map').setView([10.0442, 76.3281], 13); // Default to Kochi
+
+  // Load OpenStreetMap tiles
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  // Add a draggable marker
+  var marker = L.marker([10.0442, 76.3281], { draggable: true }).addTo(map);
+
+  // Update hidden inputs and reverse geocode on marker drag
+  marker.on('dragend', function (e) {
+    var latlng = marker.getLatLng();
+    document.getElementById('latitude').value = latlng.lat;
+    document.getElementById('longitude').value = latlng.lng;
+    reverseGeocode(latlng.lat, latlng.lng); // Fetch address
+  });
+
+  // Allow the user to click on the map and move the marker
+  map.on('click', function (e) {
+    marker.setLatLng(e.latlng);
+    document.getElementById('latitude').value = e.latlng.lat;
+    document.getElementById('longitude').value = e.latlng.lng;
+    reverseGeocode(e.latlng.lat, e.latlng.lng); // Fetch address
+  });
+
+  // Reverse geocoding to get the address from latitude and longitude
+  function reverseGeocode(lat, lng) {
+    var url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        var address = data.display_name;  // Full address from coordinates
+        document.getElementById('address-input').value = address; // Display the address in the input
+        document.getElementById('address').value = address; // autofill textarea too
+
+      })
+      .catch(error => {
+        console.error("Geocoding failed: ", error);
+      });
+  }
+</script>
+
+
+  
+</html>

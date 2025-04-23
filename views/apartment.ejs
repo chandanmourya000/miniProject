@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartments</title>
+    <link rel="stylesheet" href="/boyshostel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+       <!-- In <head> or before closing </body> -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+
+</head>
+<body>
+    <!-- Header copied from main.ejs -->
+    <header>
+        <div id="acc1st"> 
+            <div id="logoimg">
+                <img src="/logo.jpg" alt="logo">
+            </div>
+            <h1 id="accLetter">Accomodation</h1>
+        </div> 
+        
+        <div class="navbar">
+            <div onclick="location.href='/userdashboard'">Home</div>
+            <div><a href="/userdashboard#abc">About</a></div>
+            <div><a href="https://hostels.cusat.ac.in/">College Hostel</a></div>
+            <div class="dropdown">
+                <button class="dropbtn">Private Hostel</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-item" onclick="location.href='/apartment'">Apartment</div>
+                    <div class="dropdown-item" onclick="location.href='/pg'">PG</div>
+                    <div class="dropdown-item" onclick="location.href='/boyshostel'">Boys Hostel</div>
+                    <div class="dropdown-item" onclick="location.href='/girlshostel'">Girls Hostel</div>
+                </div>
+            </div>
+            <div onclick="location.href='/matchroommates'">Room mate Matching</div>
+            <!-- <div id="signUpButton" onclick="location.href='/login'">Signup/Login</div> -->
+            <div id="signUpButton" onclick="location.href='/logout'">Login out</div>
+
+        </div>
+    </header>
+
+    <!-- Stylish Search + Filter Section -->
+    <section class="filter-section">
+        <input type="search" id="searchBox" placeholder="Search hostel...">
+
+        <label for="priceFilter">Max Price:</label>
+        <input type="number" id="priceFilter" placeholder="Enter max price">
+
+        <label for="sharingFilter">Sharing:</label>
+        <select id="sharingFilter">
+            <option value="">Any</option>
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Triple">Triple</option>
+        </select>
+
+        <button id="filterBtn">Filter</button>
+    </section>
+
+    <main>
+        <form id="sortForm" method="GET" action="/apartment">
+            <label for="sort">Sort hostels by:</label>
+            <select name="sort" id="sort" onchange="document.getElementById('sortForm').submit()">
+                <option value="highest" <%= sort === 'highest' ? 'selected' : '' %>>Highest Rating</option>
+                <option value="lowest" <%= sort === 'lowest' ? 'selected' : '' %>>Lowest Rating</option>
+                <option value="distance" <%= sort === 'distance' ? 'selected' : '' %>>Closest Distance</option>
+
+            </select>
+        </form>  
+
+        <div id="hostel-list">
+            <% allHostel.forEach(hostel => { %>
+                <div class="hostel-card hostelClass" data-price="<%= hostel.price %>" data-sharing="<%= hostel.sharing %>"
+                                                data-lat="<%= hostel.latitude %>" 
+                                                data-lng="<%= hostel.longitude %>">
+                    <h2><%= hostel.hostelName %></h2>
+                    <p><strong>Price:</strong> ₹<%= hostel.price %></p>
+                    <p><strong>Sharing:</strong> <%= hostel.sharing %></p>
+                    <p><strong>Address:</strong> <%= hostel.address %></p>
+                    <!-- map  -->
+                    <div class="map-container" id="map-<%= hostel._id %>" style="height: 200px;"></div>
+
+                    <% if (hostel.averageRating) { %>
+                        <p><strong>Average Rating:</strong>
+                            <% const fullStars = Math.floor(hostel.averageRating); %>
+                            <% const halfStar = hostel.averageRating % 1 >= 0.5; %>
+                            <% for (let i = 0; i < fullStars; i++) { %>
+                                <i class="fa fa-star" style="color: gold;"></i>
+                            <% } %>
+                            <% if (halfStar) { %>
+                                <i class="fa fa-star-half-o" style="color: gold;"></i>
+                            <% } %>
+                            (<%= hostel.averageRating %>/5)
+                        </p>
+                    <% } else { %>
+                        <p><strong>Average Rating:</strong> Not rated yet</p>
+                    <% } %>
+                    <button class="directions-btn view-more-btn" onclick="getDirections(<%= hostel.latitude %>, <%= hostel.longitude %>)">
+                        Get Directions
+                    </button>
+                    <a href="/hostel/<%= hostel._id %>" class="view-more-btn">View More</a>
+                </div>
+            <% }); %>
+        </div>       
+    </main>
+
+    <script src="/boyshostel.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="/hostelFeatures.js"></script>
+</body>
+</html>

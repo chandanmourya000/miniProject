@@ -1,0 +1,353 @@
+:root {
+  --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+  --section-bg: #ffffff;
+  --text-primary: #333;
+  --text-secondary: #555;
+  --border-radius: 10px;
+  --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  --accent-color: #0073e6;
+  --secondary-accent: #990000;
+  --success-color: #28a745;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7fa;
+  color: var(--text-primary);
+}
+
+/* Header */
+header {
+  background: var(--primary-gradient);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#acc1st {
+  display: flex;
+  align-items: center;
+}
+
+#logoimg img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+  border: 2px solid white;
+}
+
+#accLetter {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  gap: 15px;
+  background-color: #003366;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  border-radius: 5px;
+  overflow: visible !important;
+  position: relative;
+}
+
+.navbar div, .navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 12px 18px;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.navbar div:hover, .navbar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 10;
+}
+
+.dropbtn {
+  background: transparent;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 12px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background: white;
+  min-width: 200px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  z-index: 1000;
+}
+
+.dropdown-content .dropdown-item {
+  display: block;
+  color: var(--text-primary);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  white-space: nowrap;
+}
+
+.dropdown-content .dropdown-item:hover {
+  background: var(--accent-color);
+  color: white;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#signUpButton {
+  background: var(--secondary-accent);
+  padding: 12px 18px;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#signUpButton:hover {
+  background: #800000;
+  transform: scale(1.05);
+}
+
+/* Filter Section */
+.filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+  background-color: var(--section-bg);
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid var(--accent-color);
+  margin-bottom: 20px;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  max-width: 1200px;
+  margin: 20px auto;
+}
+
+.filter-section label {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.filter-section input,
+.filter-section select {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+  color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+}
+
+.filter-section input:focus,
+.filter-section select:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(0, 115, 230, 0.1);
+  background-color: #fff;
+}
+
+.filter-section button {
+  padding: 10px 20px;
+  background: var(--primary-gradient);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+}
+
+.filter-section button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
+}
+
+/* Main Content */
+main {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+#sortForm {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: var(--section-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#sortForm label {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+#sortForm select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Hostel List Grid */
+#hostel-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+/* Hostel Cards */
+.hostel-card {
+  background: var(--section-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hostel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--primary-gradient);
+}
+
+.hostel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.hostel-card h2 {
+  color: var(--text-primary);
+  font-size: 22px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.hostel-card h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--primary-gradient);
+}
+
+.hostel-card p {
+  color: var(--text-secondary);
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.hostel-card p strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* View More Button */
+.view-more-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: var(--primary-gradient);
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
+}
+
+/* Star Rating */
+.fa-star, .fa-star-half-o {
+  color: #FFD700 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+  
+  .navbar div, .navbar a {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  #sortForm {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  #hostel-list {
+    grid-template-columns: 1fr;
+  }
+  
+  header {
+    flex-direction: column;
+    padding: 15px 10px;
+  }
+  
+  #acc1st {
+    margin-bottom: 15px;
+  }
+}
+

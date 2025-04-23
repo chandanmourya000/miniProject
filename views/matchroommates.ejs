@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roommate Matching - Accommodation Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+      --section-bg: #ffffff;
+      --text-primary: #333;
+      --text-secondary: #555;
+      --border-radius: 10px;
+      --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      --accent-color: #0073e6;
+      --secondary-accent: #990000;
+      --success-color: #28a745;
+      --danger-color: #dc3545;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    
+    .header {
+      background-color: var(--section-bg);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary-gradient);
+    }
+    
+    h1 {
+      color: var(--text-primary);
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--primary-gradient);
+      border-radius: 3px;
+    }
+    
+    .intro-text {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 25px;
+    }
+    
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+    
+    #matchesSection {
+      display: none;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .no-matches {
+      background-color: var(--section-bg);
+      border-radius: var(--border-radius);
+      padding: 40px;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 18px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .no-matches::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary-gradient);
+    }
+    
+    .no-matches img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 5px solid #f5f7fa;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .match-card {
+      background-color: var(--section-bg);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .match-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary-gradient);
+    }
+    
+    .match-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .match-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .match-name {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    
+    .match-score {
+      background: var(--primary-gradient);
+      color: white;
+      border-radius: 20px;
+      padding: 5px 15px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    
+    .match-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .match-detail {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+    
+    .match-detail i {
+      margin-right: 6px;
+      font-size: 18px;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .active-now {
+      display: inline-flex;
+      align-items: center;
+      background-color: rgba(40, 167, 69, 0.1);
+      color: var(--success-color);
+      border-radius: 20px;
+      padding: 6px 16px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .active-now::before {
+      content: "";
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background-color: var(--success-color);
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    
+    .match-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+      margin-right: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .match-user {
+      display: flex;
+      align-items: center;
+    }
+    
+    /* Header Navigation (Optional - Add if you want to match the other pages) */
+    .page-header {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 20px;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 20px;
+    }
+    
+    .back-link {
+      display: inline-block;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      padding: 0.9rem 1.8rem;
+      background: var(--primary-gradient);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+        margin: 20px auto;
+      }
+      
+      .header, .match-card {
+        padding: 20px;
+      }
+      
+      .match-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .match-score {
+        align-self: flex-start;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .intro-text {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Optional Navigation Header -->
+  <div class="page-header">
+    <div class="container">
+      <h1>Roommate Matching</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <h1>Find Your Perfect Roommate</h1>
+      <p class="intro-text">Our algorithm matches you with compatible roommates based on your preferences and lifestyle.</p>
+      <button class="btn-primary" onclick="showMatches()">See Your Matches <i class="fas fa-search"></i></button>
+    </div>
+
+    <div id="matchesSection">
+      <% if (matches.length === 0) { %>
+        <div class="no-matches">
+          <img src="https://via.placeholder.com/120" alt="No matches">
+          <p>No matches found yet. We're still looking for your perfect roommate. Try again later!</p>
+          <a href="<%= user && user.role === 'admin' ? '/admindashboard' : '/userdashboard' %>" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+      <% } else { %>
+        <% matches.forEach(match => { %>
+          <div class="match-card">
+            <div class="match-header">
+              <div class="match-user">
+                <div class="match-avatar"><%= match.user.username.charAt(0).toUpperCase() %></div>
+                <h3 class="match-name"><%= match.user.username %></h3>
+              </div>
+              <div class="match-score">
+                <span><%= match.score %>/8</span> compatibility
+              </div>
+            </div>
+            
+            <div class="match-details">
+              <div class="match-detail">
+                <i class="fas fa-phone"></i> <%= match.user.contactNumber %>
+              </div>
+              <div class="match-detail">
+                <i class="fas fa-clock"></i> Last active: <%= new Date(match.user.updatedAt).toLocaleString() %>
+              </div>
+            </div>
+            
+            <% const activeNow = (new Date() - new Date(match.user.updatedAt)) < 2 * 60 * 1000; %>
+            <% if (activeNow) { %>
+              <div class="active-now">Matching Now</div>
+            <% } %>
+          </div>
+        <% }) %>
+        
+        <a href="<%= user && user.role === 'admin' ? '/admindashboard' : '/userdashboard' %>" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+      <% } %>
+    </div>
+  </div>
+
+  <script>
+    function showMatches() {
+      document.getElementById("matchesSection").style.display = "block";
+      window.scrollTo({
+        top: document.getElementById("matchesSection").offsetTop - 20,
+        behavior: "smooth"
+      });
+    }
+  </script>
+</body>
+</html>

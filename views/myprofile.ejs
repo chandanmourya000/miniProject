@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Accommodation Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+            --section-bg: #ffffff;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --accent-color: #0073e6;
+            --secondary-accent: #990000;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .profile-header {
+            background-color: var(--section-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            color: var(--text-primary);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 3px;
+        }
+        
+        h2 {
+            color: var(--text-primary);
+            border-bottom: 2px solid rgba(0, 115, 230, 0.2);
+            padding-bottom: 10px;
+            margin-top: 0;
+            position: relative;
+            font-weight: 600;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+        
+        .card {
+            background-color: var(--section-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+        
+        .info-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            display: block;
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .info-value {
+            font-weight: 500;
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background-color: #f9f9f9;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-primary);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(0, 115, 230, 0.1);
+            background-color: #fff;
+        }
+        
+        input[readonly] {
+            background-color: #f2f2f2;
+            color: var(--text-secondary);
+            cursor: not-allowed;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .badge-blue {
+            background-color: rgba(0, 115, 230, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .badge-green {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-red {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .badge-yellow {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .preference-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .preference-options {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            
+            .profile-header, .card {
+                padding: 20px;
+            }
+            
+            .info-group {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="<%= currentUser && currentUser.role === 'admin' ? '/admindashboard' : '/userdashboard' %>" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+        
+        <form method="POST" action="/myprofile">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    <%= user.username.charAt(0).toUpperCase() %>
+                </div>
+                <h1>My Profile</h1>
+
+                <div class="info-group">
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-user"></i> Username</span>
+                        <input type="text" name="username" value="<%= user.username %>" readonly />
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-envelope"></i> Email</span>
+                        <input type="email" name="email" value="<%= user.email %>" readonly />
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-phone"></i> Contact Number</span>
+                        <input type="text" name="contactNumber" value="<%= user.contactNumber %>" pattern="\d{10}" maxlength="10" required />
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-venus-mars"></i> Gender</span>
+                        <select name="gender" required>
+                            <option value="Male" <%= user.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                            <option value="Female" <%= user.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                            <option value="Other" <%= user.gender === 'Other' ? 'selected' : '' %>>Other</option>
+                        </select>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-users"></i> Wants Roommate Matching</span>
+                        <select name="wantsRoommateMatching">
+                            <option value="false" <%= user.preferences.wantsRoommateMatching ? '' : 'selected' %>>No</option>
+                            <option value="true" <%= user.preferences.wantsRoommateMatching ? 'selected' : '' %>>Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Preferences</h2>
+
+                <div class="info-group">
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-clock"></i> Wake Up Time</span>
+                        <select name="wakeUpTime">
+                            <option value="Early (Before 8 AM)" <%= user.preferences.wakeUpTime === 'Early (Before 8 AM)' ? 'selected' : '' %>>Early (Before 8 AM)</option>
+                            <option value="Late (After 8 AM)" <%= user.preferences.wakeUpTime === 'Late (After 8 AM)' ? 'selected' : '' %>>Late (After 8 AM)</option>
+                        </select>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-moon"></i> Sleep Time</span>
+                        <select name="sleepTime">
+                            <option value="Early (Before 11 PM)" <%= user.preferences.sleepTime === 'Early (Before 11 PM)' ? 'selected' : '' %>>Early (Before 11 PM)</option>
+                            <option value="Late (After 11 PM)" <%= user.preferences.sleepTime === 'Late (After 11 PM)' ? 'selected' : '' %>>Late (After 11 PM)</option>
+                        </select>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-smoking"></i> Smoking</span>
+                        <select name="smoking">
+                            <option value="false" <%= user.preferences.smoking ? '' : 'selected' %>>No</option>
+                            <option value="true" <%= user.preferences.smoking ? 'selected' : '' %>>Yes</option>
+                        </select>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-glass-cheers"></i> Drinking</span>
+                        <select name="drinking">
+                            <option value="false" <%= user.preferences.drinking ? '' : 'selected' %>>No</option>
+                            <option value="true" <%= user.preferences.drinking ? 'selected' : '' %>>Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="info-group">
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-broom"></i> Cleanliness</span>
+                        <select name="cleanliness">
+                            <option value="Neat & Oranized" <%= user.preferences.cleanliness === 'Neat & Oranized' ? 'selected' : '' %>>Neat & Organized</option>
+                            <option value="Reasonably Tidy" <%= user.preferences.cleanliness === 'Reasonably Tidy' ? 'selected' : '' %>>Reasonably Tidy</option>
+                            <option value="Relaxed about Tidiness" <%= user.preferences.cleanliness === 'Relaxed about Tidiness' ? 'selected' : '' %>>Relaxed About Tidiness</option>
+                        </select>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-home"></i> Lifestyle</span>
+                        <select name="lifestyle">
+                            <option value="Quiet & Peaceful" <%= user.preferences.lifestyle === 'Quiet & Peaceful' ? 'selected' : '' %>>Quiet & Peaceful</option>
+                            <option value="Social & Outgoing" <%= user.preferences.lifestyle === 'Social & Outgoing' ? 'selected' : '' %>>Social & Outgoing</option>
+                        </select>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-utensils"></i> Diet</span>
+                        <select name="diet">
+                            <option value="Veg" <%= user.preferences.diet === 'Veg' ? 'selected' : '' %>>Vegetarian</option>
+                            <option value="Non-Veg" <%= user.preferences.diet === 'Non-Veg' ? 'selected' : '' %>>Non-Vegetarian</option>
+                            <option value="Vegan" <%= user.preferences.diet === 'Vegan' ? 'selected' : '' %>>Vegan</option>
+                        </select>
+                    </div>
+
+                    <div class="info-item">
+                        <span class="info-label"><i class="fas fa-brain"></i> Personality</span>
+                        <select name="personality">
+                            <option value="Introvert" <%= user.preferences.personality === 'Introvert' ? 'selected' : '' %>>Introvert</option>
+                            <option value="Ambivert" <%= user.preferences.personality === 'Ambivert' ? 'selected' : '' %>>Ambivert</option>
+                            <option value="Extrovert" <%= user.preferences.personality === 'Extrovert' ? 'selected' : '' %>>Extrovert</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:20px;">
+                <button type="submit"><i class="fas fa-save"></i> Save Changes</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Accommodation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styleMain.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+            --section-bg: #ffffff;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --accent-color: #0073e6;
+            --secondary-accent: #990000;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+            --info-color: #17a2b8;
+            --dark-color: #343a40;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Notifications panel styling */
+        .notifications-panel {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+            padding: 12px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 5;
+        }
+
+        .notifications-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .notifications-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin: 0;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .notifications-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: var(--accent-color);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'%3E%3C/path%3E%3Cpath d='M13.73 21a2 2 0 0 1-3.46 0'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'%3E%3C/path%3E%3Cpath d='M13.73 21a2 2 0 0 1-3.46 0'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
+        }
+
+        .notification-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-bell {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .notification-bell:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: #f8f8f8;
+        }
+
+        .bell-icon {
+            font-size: 1.2rem;
+            color: var(--warning-color);
+            animation: bellShake 3s infinite;
+            display: inline-block;
+            margin-right: 10px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes bellShake {
+            0% { transform: rotate(0); }
+            3% { transform: rotate(15deg); }
+            6% { transform: rotate(-15deg); }
+            9% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+
+        .notification-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .vlog-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(74, 109, 167, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .vlog-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 109, 167, 0.4);
+        }
+
+        .vlog-icon {
+            margin-right: 8px;
+        }
+        
+        /* Admin Dashboard Layout */
+        .admin-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+            padding: 0 20px;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+        }
+        
+        .sidebar-title {
+            color: var(--accent-color);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+            position: relative;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu-item {
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-menu-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .sidebar-menu-link:hover {
+            background-color: rgba(0, 115, 230, 0.05);
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        
+        .sidebar-menu-link i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            width: 20px;
+            text-align: center;
+        }
+        
+        .user-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .user-section-title {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .logout-item {
+            color: var(--danger-color) !important;
+        }
+        
+        .logout-item i {
+            color: var(--danger-color) !important;
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+        }
+        
+        /* Welcome Section - Matching User Dashboard */
+        .welcome-section {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .welcome-section h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 80%;
+            color: white;
+        }
+        
+        .welcome-section::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        /* Dashboard Stats - Matching User Dashboard */
+        .dashboard-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            margin: 0 10px 20px 10px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .stat-card .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+        
+        .stat-card .stat-icon {
+            font-size: 36px;
+            margin: 10px 0;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        /* Dashboard Actions - Matching User Dashboard */
+        .dashboard-actions-container {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 115, 230, 0.2);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+        
+        .dashboard-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .dashboard-card-action {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            flex: 1;
+            min-width: 180px;
+            justify-content: center;
+        }
+        
+        .dashboard-card-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .dashboard-card-action i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Tab Container */
+        .tab-container {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .tab-header {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--accent-color);
+            background-color: white;
+            font-weight: 600;
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+        
+        .tab:hover:not(.active) {
+            background-color: #e9ecef;
+            color: var(--text-primary);
+        }
+        
+        .tab-content {
+            padding: 25px;
+        }
+        
+        /* Hostel Lists */
+        .hostel-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .hostel-item {
+            padding: 25px;
+            border-radius: var(--border-radius);
+            background-color: var(--section-bg);
+            border: 1px solid #eee;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hostel-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .hostel-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--primary-gradient);
+        }
+        
+        .hostel-item h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .hostel-details {
+            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .hostel-details p {
+            margin: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .hostel-details p i {
+            margin-right: 8px;
+            color: var(--accent-color);
+            font-size: 14px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .hostel-details strong {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        
+        .hostel-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .hostel-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hostel-btn i {
+            margin-right: 6px;
+        }
+        
+        .approve-btn {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .approve-btn:hover {
+            background-color: #218838;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .edit-btn {
+            background-color: var(--primary-gradient);
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background-color: #0069d9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .delete-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background-color: #c82333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Badge Styles */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 12px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .badge-pending {
+            background: linear-gradient(to right, #ffc107, #ffb700);
+            color: #212529;
+        }
+        
+        .badge-approved {
+            background: linear-gradient(to right, #28a745, #20c997);
+            color: white;
+        }
+        
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .empty-state p {
+            font-size: 1.2rem;
+            margin: 0;
+            opacity: 0.8;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .admin-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .dashboard-actions {
+                width: 100%;
+            }
+            
+            .notifications-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .notification-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .hostel-actions {
+                flex-wrap: wrap;
+            }
+            
+            .tab-header {
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .dashboard-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div id="acc1st"> 
+            <div id="logoimg">
+                <img src="/logo.jpg" alt="logo">
+            </div>
+            <h1 id="accLetter">Accommodation</h1>
+        </div> 
+            
+        <div class="navbar">
+            <div><a href="/admindashboard">Home</a></div>
+            <div><a href="#abc">About</a></div>
+            <div>
+                <a href="https://hostels.cusat.ac.in/">College Hostel</a>
+            </div>
+            <!-- private hostel -->
+            <div class="dropdown">
+                <button class="dropbtn">Private Hostel</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-item" onclick="location.href='/apartment'">Apartment</div>
+                    <div class="dropdown-item" onclick="location.href='/pg'">PG</div>
+                    <div class="dropdown-item" onclick="location.href='/boyshostel'">Boys Hostel</div>
+                    <div class="dropdown-item" onclick="location.href='/girlshostel'">Girls Hostel</div>
+                </div>
+            </div>
+            <div><a href="/matchroommates">🔍 Find a Roommate</a></div>
+        </div>
+    </header>
+
+    <!-- Notifications panel -->
+    <div class="notifications-panel">
+        <div class="notifications-container">
+            <h3 class="notifications-title">Admin Control Panel</h3>
+            <div class="notification-actions">
+                <a href="/admin/notifications" class="notification-bell">
+                    <i class="fas fa-bell bell-icon"></i>
+                    <span>Pending Approvals</span>
+                    <span class="notification-count"><%= pendingHostels.length %></span>
+                </a>
+                <a href="/admin/reports" class="vlog-link">
+                    <i class="fas fa-shield-alt vlog-icon"></i>
+                    <span>Admin Tools</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <div class="sidebar">
+            <h3 class="sidebar-title">Admin Control</h3>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a href="/admindashboard" class="sidebar-menu-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a onclick="switchTab('approved')" class="sidebar-menu-link">
+                        <i class="fas fa-building"></i>
+                        <span>Manage Hostels</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="/manageusers" class="sidebar-menu-link">
+                        <i class="fas fa-users"></i>
+                        <span>User Management</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="/managevlogs" class="sidebar-menu-link">
+                        <i class="fas fa-flag"></i>
+                        <span>Manage Updates</span>
+                    </a>
+                </li>
+                <!-- <li class="sidebar-menu-item">
+                    <a href="/admin/analytics" class="sidebar-menu-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li> -->
+            </ul>
+            
+            <!-- User Profile Section -->
+            <div class="user-section">
+                <h3 class="user-section-title">Admin Profile</h3>
+                <ul class="sidebar-menu">
+                    <li class="sidebar-menu-item">
+                        <a href="/myprofile" class="sidebar-menu-link">
+                            <i class="fas fa-user-cog"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
+                        <a href="/logout" class="sidebar-menu-link logout-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main content area -->
+        <div class="main-content">
+            <!-- Welcome Section (New) -->
+            <section class="welcome-section">
+                <h1>Admin Control Center</h1>
+                <p>Manage accommodations, user accounts, and platform activity from this centralized dashboard.</p>
+            </section>
+
+            <!-- Dashboard Stats (New) -->
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-number"><%= pendingHostels.length %></div>
+                    <div class="stat-label">Pending Approvals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number"><%= allHostels.length %></div>
+                    <div class="stat-label">Active Listings</div>
+                </div>
+                <!-- You can add more stats here if needed -->
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="stat-label">Admin Controls</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-tools"></i></div>
+                    <div class="stat-label">Management Tools</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Actions (Modified) -->
+            <div class="dashboard-actions-container">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="dashboard-actions">
+                    <a href="/addHostel" class="dashboard-card-action">
+                        <i class="fas fa-plus"></i>
+                        <span>Add New Hostel</span>
+                    </a>
+                    <a href="/manageusers" class="dashboard-card-action">
+                        <i class="fas fa-users"></i>
+                        <span>Manage Users</span>
+                    </a>
+                    <a href="/managevlogs" class="dashboard-card-action">
+                        <i class="fas fa-flag"></i>
+                        <span>Review Updates</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Tab navigation for different hostel lists -->
+            <div class="tab-container">
+                <div class="tab-header">
+                    <div class="tab active" onclick="switchTab('pending')">Pending Approvals</div>
+                    <div class="tab" onclick="switchTab('approved')">Approved Hostels</div>
+                </div>
+                
+                <!-- Pending Hostels Tab -->
+                <div id="pending-tab" class="tab-content">
+                    <% if (pendingHostels.length === 0) { %>
+                        <div class="empty-state">
+                            <i class="fas fa-check-circle"></i>
+                            <p>No hostels pending approval ✅</p>
+                        </div>
+                    <% } else { %>
+                        <ul class="hostel-list">
+                            <% pendingHostels.forEach(function(hostel) { %>
+                                <li class="hostel-item">
+                                    <h3><%= hostel.hostelName %> <span class="badge badge-pending">Pending</span></h3>
+                                    <div class="hostel-details">
+                                        <p><i class="fas fa-info-circle"></i><strong>Description:</strong> <%= hostel.description %></p>
+                                        <p><i class="fas fa-rupee-sign"></i><strong>Price:</strong> ₹<%= hostel.price %></p>
+                                        <p><i class="fas fa-tag"></i><strong>Category:</strong> <%= hostel.category %></p>
+                                    </div>
+                                    <div class="hostel-actions">
+                                        <form action="/admin/approve/<%= hostel._id %>" method="POST">
+                                            <button type="submit" class="hostel-btn approve-btn">
+                                                <i class="fas fa-check-circle"></i> Approve
+                                            </button>
+                                        </form>
+                                        <form action="/admin/edit/<%= hostel._id %>" method="GET">
+                                            <button type="submit" class="hostel-btn edit-btn">
+                                                <i class="fas fa-pencil-alt"></i> Edit
+                                            </button>
+                                        </form>
+                                        <form action="/admin/disapprove/<%= hostel._id %>" method="POST">
+                                            <button type="submit" class="hostel-btn delete-btn">
+                                                <i class="fas fa-times-circle"></i> Disapprove
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                </div>
+                
+                <!-- Approved Hostels Tab (hidden by default) -->
+                <div id="approved-tab" class="tab-content" style="display: none;">
+                    <% if (allHostels.length === 0) { %>
+                        <div class="empty-state">
+                            <i class="fas fa-home"></i>
+                            <p>No approved hostels found.</p>
+                        </div>
+                    <% } else { %>
+                        <ul class="hostel-list">
+                            <% allHostels.forEach(function(hostel) { %>
+                                <li class="hostel-item">
+                                    <h3><%= hostel.hostelName %> <span class="badge badge-approved">Approved</span></h3>
+                                    <div class="hostel-details">
+                                        <p><i class="fas fa-info-circle"></i><strong>Description:</strong> <%= hostel.description %></p>
+                                        <p><i class="fas fa-rupee-sign"></i><strong>Price:</strong> ₹<%= hostel.price %></p>
+                                        <p><i class="fas fa-tag"></i><strong>Category:</strong> <%= hostel.category %></p>
+                                        <p><i class="fas fa-check-circle"></i><strong>Status:</strong> <%= hostel.status %></p>
+                                    </div>
+                                    <div class="hostel-actions">
+                                        <form action="/admin/edit/<%= hostel._id %>" method="GET">
+                                            <button type="submit" class="hostel-btn edit-btn">
+                                                <i class="fas fa-pencil-alt"></i> Edit
+                                            </button>
+                                        </form>
+                                        <form action="/admin/delete/<%= hostel._id %>" method="POST">
+                                            <button type="submit" class="hostel-btn delete-btn">
+                                                <i class="fas fa-trash-alt"></i> Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.getElementById('pending-tab').style.display = 'none';
+            document.getElementById('approved-tab').style.display = 'none';
+            
+            // Show selected tab content
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            
+            // Update active tab styling
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Find the clicked tab and add active class
+            const activeTab = Array.from(tabs).find(tab => tab.textContent.toLowerCase().includes(tabName));
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

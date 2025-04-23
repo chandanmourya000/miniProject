@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to our website</title>
+    <link rel="stylesheet" href="/styleMain.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles to match user dashboard */
+        :root {
+            --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+            --section-bg: #ffffff;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --accent-color: #0073e6;
+            --secondary-accent: #990000;
+            --success-color: #28a745;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+        }
+        
+        .hero-section {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            max-width: 1200px;
+        }
+        
+        .hero-section h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .hero-section p {
+            font-size: 18px;
+            opacity: 0.9;
+            max-width: 80%;
+            color: white;
+        }
+        
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        
+        .feature-card {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-card h3 {
+            color: var(--text-primary);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+        
+        .feature-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .feature-card .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .card-action {
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+        
+        .card-action:hover {
+            transform: scale(1.05);
+        }
+        
+        #abc {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 900px;
+        }
+        
+        #abc h2 {
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        #abc p {
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        
+        .map-section {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+        }
+        
+        .map-section h2 {
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Statistics section */
+        .stats-section {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px auto;
+            max-width: 1200px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+        
+        .stat-card {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 20px;
+            flex: 1;
+            min-width: 200px;
+            margin: 0 10px 20px 10px;
+            text-align: center;
+        }
+        
+        .stat-card .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+        
+        .stat-card .stat-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+        
+        footer {
+            background: #003366;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        footer a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        footer a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-section {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                margin: 0 0 20px 0;
+            }
+            
+            .hero-section {
+                padding: 30px 20px;
+            }
+            
+            .hero-section p {
+                max-width: 100%;
+            }
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            background: var(--section-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 1200px;
+        }
+        
+        .testimonials-section h2 {
+            color: var(--text-primary);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(to bottom right, #f9f9f9, #ffffff);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 22px;
+            margin-right: 15px;
+        }
+        
+        .testimonial-info h4 {
+            margin: 0 0 5px 0;
+            color: var(--text-primary);
+            font-size: 18px;
+        }
+        
+        .testimonial-info span {
+            color: var(--text-secondary);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .testimonial-content p {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+        
+        .testimonial-rating {
+            color: #FFD700;
+            font-size: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+            <div id ="acc1st"> 
+              <div id="logoimg">
+                <img src="/logo.jpg" alt="logo">
+              </div>
+            <h1 id="accLetter">Accommodation</h1>
+            </div> 
+        
+            <div class="navbar">
+              <div>Home</div>
+            <div><a href="#abc">About</a></div>
+              <div>
+                <a href="https://hostels.cusat.ac.in/">College Hostel</a>
+              </div>
+              <!-- private hostel -->
+              <div class="dropdown">
+                <button class="dropbtn">Private Hostel</button>
+                   <div class="dropdown-content">
+                   <div class="dropdown-item" onclick="location.href='/login'">Apartment</div>
+                    <div class="dropdown-item" onclick="location.href='/login'">PG</div>
+                    <div class="dropdown-item" onclick="location.href='/login'">Boys Hostel</div>
+                    <div class="dropdown-item" onclick="location.href='/login'">Girls Hostel</div>
+                </div>
+              </div>
+              <div onclick="location.href='/login'">Room mate Matching</div>              
+              <div id="signUpButton" onclick="location.href='/login'">Signup/Login</div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-section">
+            <h1>Find Your Perfect Campus Accommodation</h1>
+            <p>Whether you're looking for a hostel, PG, or apartment, we've got you covered with affordable and comfortable options near CUSAT.</p>
+        </section>
+        
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Available Hostels</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25+</div>
+                <div class="stat-label">PG Options</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Apartments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Roommate Matches</div>
+            </div>
+        </div>
+        
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <h3>Boys Hostels</h3>
+                <p>Explore comfortable and affordable hostel options for male students near the campus.</p>
+                <a href="/login" class="card-action">Browse Hostels</a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-home"></i></div>
+                <h3>Girls Hostels</h3>
+                <p>Discover safe and well-maintained hostel facilities for female students.</p>
+                <a href="/login" class="card-action">Browse Hostels</a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <h3>PG Accommodations</h3>
+                <p>Find paying guest accommodations with home-like amenities and comfort.</p>
+                <a href="/login" class="card-action">View PGs</a>
+            </div>
+            
+            <div class="feature-card">
+                <div class="icon"><i class="fas fa-city"></i></div>
+                <h3>Apartments</h3>
+                <p>Explore apartment options for students who prefer more independent living.</p>
+                <a href="/login" class="card-action">View Apartments</a>
+            </div>
+
+            <div class="feature-card">
+              <div class="icon"><i class="fas fa-users"></i></div>
+              <h3>Roommate Matching</h3>
+              <p>Find compatible roommates based on your preferences and lifestyle.</p>
+              <a href="/login" class="card-action">Find Matches</a>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon"><i class="fas fa-plus-circle"></i></div>
+            <h3>List Your Hostel</h3>
+            <p>Have a property to list? Add it to our platform to reach potential tenants.</p>
+            <a href="/login" class="card-action">Add Listing</a>
+        </div>
+        </div>
+        
+          <section id="abc">
+            <h2>About</h2>
+            <p>Designed for all CUSAT students, this website aims to provide affordable and comfortable accommodations.
+              Whether you are looking for a hostel, a PG or an apartment, we have got you covered. Our vision is to make your
+              time at the campus comfortable and memorable. Apart from searching for accommodations, this website also provides
+              some fun features such as "roommate-matching" and "hostel reviews".</p>
+            <p>The information on this website can be updated by the verified students of the university. If you are a student,
+                make sure that the information you provide is accurate so that it is of benefit to others. Only share genuine reviews
+                and ratings. We are not responsible for any false information provided by users.</p>
+        </section>
+        
+        <section class="map-section">
+            <h2>Travel the Campus</h2>
+            <p>
+                <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6874194485927!2d76.32657721471199!3d10.042631892821959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080c37738769d3%3A0x5ef54323a29bcbfb!2sCUSAT%20Student%20Amenity%20Centre!5e0!3m2!1sen!2sin!4v1638713903584!5m2!1sen!2sin" loading="lazy" allowfullscreen="">
+                </iframe>
+            </p>
+        </section>
+      
+        <section class="testimonials-section">
+            <h2>What Students Say</h2>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar" style="background-color: #4a6da7;">R</div>
+                        <div class="testimonial-info">
+                            <h4>Raushan</h4>
+                            <span>Computer Science, 3rd Year</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"Found a great PG through this platform. The roommate matching feature helped me connect with like-minded students. Highly recommend!"</p>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar" style="background-color: #990000;">S</div>
+                        <div class="testimonial-info">
+                            <h4>Sudhanshu</h4>
+                            <span>Electronics Engineering, 2nd Year</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"This website made finding accommodation so much easier! The detailed listings helped me make an informed decision about my hostel."</p>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar" style="background-color: #28a745;">A</div>
+                        <div class="testimonial-info">
+                            <h4>Arpan</h4>
+                            <span>Mechanical Engineering, 4th Year</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"As a final year student, I needed a quiet apartment near campus. This platform helped me find exactly what I was looking for within my budget."</p>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar" style="background-color: #6c757d;">V</div>
+                        <div class="testimonial-info">
+                            <h4>Vinay</h4>
+                            <span>Civil Engineering, 1st Year</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"As a fresher, I was worried about finding safe accommodation. The reviews and ratings here helped me choose a good boys hostel close to campus."</p>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar" style="background-color: #fd7e14;">A</div>
+                        <div class="testimonial-info">
+                            <h4>Avinash</h4>
+                            <span>Marine Biology, 2nd Year</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"Listed my spare apartment here and found great tenants within a week! The process was smooth and the platform is very user-friendly."</p>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar" style="background-color: #e83e8c;">S</div>
+                        <div class="testimonial-info">
+                            <h4>Shanaya</h4>
+                            <span>Architecture, 3rd Year</span>
+                        </div>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"The roommate matching feature is amazing! I found someone with similar interests and habits, and we've been great roommates for over a year now."</p>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </main>
+
+        <footer>
+        <!-- <a href="/vlog"><i class="fas fa-file-alt"></i> Go to Vlog Page</a> -->
+        <p>&copy; 2025 Accommodation Portal. All rights reserved.</p>
+        </footer>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Accommodation Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+      --section-bg: #ffffff;
+      --text-primary: #333;
+      --text-secondary: #555;
+      --border-radius: 10px;
+      --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      --accent-color: #0073e6;
+      --secondary-accent: #990000;
+      --success-color: #28a745;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* Header */
+    header {
+      background: linear-gradient(to right, #990000, #0073e6);
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    #acc1st {
+      display: flex;
+      align-items: center;
+    }
+    
+    #logoimg img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 15px;
+      border: 2px solid white;
+    }
+    
+    #accLetter {
+      font-size: 26px;
+      font-weight: bold;
+    }
+    
+    .home-link {
+      padding: 10px 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .home-link:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    /* Signup Container */
+    .page-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    
+    .signup-card {
+      background: var(--section-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .signup-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: var(--primary-gradient);
+    }
+    
+    .signup-card h1 {
+      color: var(--text-primary);
+      margin-bottom: 30px;
+      font-size: 28px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .signup-card h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: var(--primary-gradient);
+      border-radius: 3px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+      color: var(--text-primary);
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(0, 115, 230, 0.1);
+      background-color: #fff;
+    }
+    
+    .password-requirements {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 5px;
+      padding-left: 5px;
+    }
+    
+    .signup-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .signup-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 115, 230, 0.3);
+    }
+    
+    .separator {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .separator::before,
+    .separator::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .separator span {
+      padding: 0 10px;
+      color: #999;
+      font-size: 14px;
+    }
+    
+    .login-prompt {
+      margin-top: 20px;
+    }
+    
+    .login-prompt p {
+      margin-bottom: 10px;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    
+    .login-link {
+      display: inline-block;
+      padding: 10px 25px;
+      background: transparent;
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .login-link:hover {
+      background: var(--accent-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .terms {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    
+    /* Footer */
+    footer {
+      background: #003366;
+      text-align: center;
+      color: white;
+      padding: 20px;
+      margin-top: auto;
+    }
+    
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px 10px;
+      }
+      
+      #acc1st {
+        margin-bottom: 15px;
+      }
+      
+      .signup-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div id="acc1st"> 
+      <div id="logoimg">
+        <img src="/logo.jpg" alt="logo">
+      </div>
+      <h1 id="accLetter">Accommodation</h1>
+    </div>
+    <a href="/" class="home-link"><i class="fas fa-home"></i> Back to Home</a>
+  </header>
+
+  <div class="page-container">
+    <div class="signup-card">
+      <h1>Create Account</h1>
+      
+      <form action="/signup" method="post">
+        <div class="form-group">
+          <label for="username"><i class="fas fa-user"></i> Username</label>
+          <input type="text" id="username" name="username" placeholder="Choose a username" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="password" name="password" placeholder="Create a password" required>
+          <div class="password-requirements">
+            Password should be at least 8 characters and include a mix of letters, numbers, and symbols.
+          </div>
+        </div>
+        
+        <button type="submit" class="signup-btn">Create Account <i class="fas fa-user-plus"></i></button>
+      </form>
+
+      <div class="separator">
+        <span>OR</span>
+      </div>
+
+      <div class="login-prompt">
+        <p>Already have an account?</p>
+        <a href="/login" class="login-link">Login</a>
+      </div>
+      
+      <div class="terms">
+        By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. We'll send you account-related emails occasionally.
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Accommodation Portal. All rights reserved.</p>
+  </footer>
+</body>
+</html>

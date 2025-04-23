@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Accommodation Portal</title>
+    <link rel="stylesheet" href="/styleMain.css">
+    <link rel="stylesheet" href="/userDashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div id="acc1st"> 
+            <div id="logoimg">
+                <img src="/logo.jpg" alt="logo">
+            </div>
+            <h1 id="accLetter">Accommodation</h1>
+        </div> 
+        
+        <div class="navbar">
+            <div>Home</div>
+            <div><a href="#abc">About</a></div>
+            <div>
+                <a href="https://hostels.cusat.ac.in/">College Hostel</a>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Private Hostel</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-item" onclick="location.href='/apartment'">Apartment</div>
+                    <div class="dropdown-item" onclick="location.href='/pg'">PG</div>
+                    <div class="dropdown-item" onclick="location.href='/boyshostel'">Boys Hostel</div>
+                    <div class="dropdown-item" onclick="location.href='/girlshostel'">Girls Hostel</div>
+                </div>
+            </div>
+            <div><a href="/matchroommates">🔍 Find a Roommate</a></div>              
+            
+            <!-- User dropdown - preserved from second code -->
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fas fa-user user-icon-symbol"></i></button>
+                <div class="dropdown-content">
+                <div class="dropdown-item" onclick="location.href='/myprofile'">My Profile</div>
+                <div class="dropdown-item" onclick="location.href='/logout'">Logout</div>
+            </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Notifications panel - preserved from second code -->
+    <div class="notifications-panel">
+        <div class="notifications-container">
+            <h3 class="notifications-title">Activity Updates</h3>
+            <div class="notification-actions">
+                <a href="/vlog" class="notification-bell">
+                    <i class="fas fa-bell bell-icon"></i>
+                    <span>Notifications</span>
+                    <span class="notification-count"><%= unseenVlogs.length %></span>
+                </a>
+                <a href="/vlog" class="vlog-link">
+                    <i class="fas fa-file-alt vlog-icon"></i>
+                    <span>Latest Updates</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-container">
+        <section class="welcome-section">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Find your perfect accommodation, connect with potential roommates, and manage your housing preferences all in one place.</p>
+        </section>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Available Hostels</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">25+</div>
+                <div class="stat-label">PG Options</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Apartments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Roommate Matches</div>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="dashboard-card">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <h3>Boys Hostels</h3>
+                <p>Explore comfortable and affordable hostel options for male students near the campus.</p>
+                <a href="/boyshostel" class="card-action">Browse Hostels</a>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="icon"><i class="fas fa-home"></i></div>
+                <h3>Girls Hostels</h3>
+                <p>Discover safe and well-maintained hostel facilities for female students.</p>
+                <a href="/girlshostel" class="card-action">Browse Hostels</a>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="icon"><i class="fas fa-building"></i></div>
+                <h3>PG Accommodations</h3>
+                <p>Find paying guest accommodations with home-like amenities and comfort.</p>
+                <a href="/pg" class="card-action">View PGs</a>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="icon"><i class="fas fa-city"></i></div>
+                <h3>Apartments</h3>
+                <p>Explore apartment options for students who prefer more independent living.</p>
+                <a href="/apartment" class="card-action">View Apartments</a>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="icon"><i class="fas fa-users"></i></div>
+                <h3>Roommate Matching</h3>
+                <p>Find compatible roommates based on your preferences and lifestyle.</p>
+                <a href="/matchroommates" class="card-action">Find Matches</a>
+            </div>
+            
+            <div class="dashboard-card">
+                <div class="icon"><i class="fas fa-plus-circle"></i></div>
+                <h3>List Your Hostel</h3>
+                <p>Have a property to list? Add it to our platform to reach potential tenants.</p>
+                <a href="/addHostel" class="card-action">Add Listing</a>
+            </div>
+        </div>
+        
+        <div class="recent-activity">
+            <h2>Recent Activity</h2>
+            
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="activity-details">
+                    <h4>New hostel review</h4>
+                    <p>You reviewed a hostel in the Boys Hostel section</p>
+                </div>
+                <div class="activity-time">2 days ago</div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="activity-details">
+                    <h4>Accommodation viewed</h4>
+                    <p>You viewed Sunshine PG details</p>
+                </div>
+                <div class="activity-time">5 days ago</div>
+            </div>
+            
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-bookmark"></i>
+                </div>
+                <div class="activity-details">
+                    <h4>Saved to favorites</h4>
+                    <p>You added Green Valley Hostel to favorites</p>
+                </div>
+                <div class="activity-time">1 week ago</div>
+            </div>
+        </div>
+        
+        <section id="abc" class="content-section">
+            <h2>About</h2>
+            <p>Designed with the needs of all CUSAT students in mind, this platform is your go-to solution for finding affordable, reliable, and comfortable accommodations near campus. Whether you're searching for a private hostel, a PG (paying guest), or a fully furnished apartment, we've got everything you need—all in one place.</p>
+            <p>Our goal is to make your stay at CUSAT not just convenient, but truly memorable. With a clean interface and powerful features like "roommate matching" based on personal preferences, and "hostel reviews" from fellow students, we help you make informed decisions and connect with the right people.</p>
+            <p>Beyond accommodation listings, this website fosters a student-powered ecosystem. Verified CUSAT students can contribute and update hostel information, ensuring that the content stays fresh, relevant, and trustworthy.</p>              
+            <p>We encourage you to be mindful and responsible when sharing reviews and ratings. Accurate and honest feedback helps others make better choices—and that's what this community is all about. Please note: we are not liable for any false or misleading information posted by users. Let's work together to keep this space helpful and trustworthy for everyone.</p>
+        </section>
+        
+        <section id="bcd" class="content-section">
+            <h2>Travel the Campus</h2>
+            <p>
+                <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.6874194485927!2d76.32657721471199!3d10.042631892821959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768 !4f13.1!3m3!1m2!1s0x3b080c37738769d3%3A0x5ef54323a29bcbfb!2sCUSAT%20Student%20Amenity%20Centre!5e0!3m2!1sen!2sin!4v1638713903584!5m2!1sen!2sin" loading="lazy" allowfullscreen="">
+                </iframe>
+            </p>
+        </section>
+
+        <!-- <a href="/addHostel" class="add-hostel-link">
+            <i class="fas fa-plus-circle"></i> Add Your Hostel
+        </a> -->
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Accommodation Portal. All rights reserved.</p>
+    </footer>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/notifications.js"></script>
+    <script>
+        // This runs when user visits vlog page or clicks bell icon
+        document.querySelector('.notification-bell').addEventListener('click', function() {
+            fetch('/mark-vlogs-seen', {
+                method: 'POST'
+            });
+        });
+    </script>
+    
+    <style>
+        /* Styles for user dropdown and notifications panel from the second code */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .user-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .user-icon:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .user-icon-symbol {
+            font-size: 1.5rem;
+            color: #505050;
+        }
+        
+        .user-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 180px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1000;
+            border-radius: 8px;
+            margin-top: 10px;
+            animation: fadeIn 0.2s ease-in-out;
+            border: 1px solid #eaeaea;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .user-dropdown-item {
+            color: #333;
+            padding: 12px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .user-dropdown-item:hover {
+            background-color: #f7f7f7;
+        }
+        
+        .user-dropdown-item i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: #4a6da7;
+        }
+        
+        .user-dropdown:hover .user-dropdown-content {
+            display: block;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: #eaeaea;
+            margin: 6px 0;
+        }
+        
+        .logout-item {
+            color: #e74c3c !important;
+        }
+        
+        .logout-item i {
+            color: #e74c3c !important;
+        }
+
+        /* Notifications panel styling */
+        .notifications-panel {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+            padding: 12px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 5;
+            margin-bottom: 20px;
+        }
+
+        .notifications-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .notifications-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #4a6da7;
+            margin: 0;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .notifications-title::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: #4a6da7;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'%3E%3C/path%3E%3Cpath d='M13.73 21a2 2 0 0 1-3.46 0'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'%3E%3C/path%3E%3Cpath d='M13.73 21a2 2 0 0 1-3.46 0'%3E%3C/path%3E%3C/svg%3E") no-repeat center center;
+            mask-size: contain;
+            -webkit-mask-size: contain;
+        }
+
+        .notification-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .notification-bell {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #e0e0e0;
+        }
+
+        .notification-bell:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background-color: #f8f8f8;
+        }
+
+        .bell-icon {
+            font-size: 1.2rem;
+            color: #FFD700;
+            animation: bellShake 3s infinite;
+            display: inline-block;
+            margin-right: 10px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes bellShake {
+            0% { transform: rotate(0); }
+            3% { transform: rotate(15deg); }
+            6% { transform: rotate(-15deg); }
+            9% { transform: rotate(0); }
+            100% { transform: rotate(0); }
+        }
+
+        .notification-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-left: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .vlog-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #4a6da7;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(74, 109, 167, 0.3);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+        }
+
+        .vlog-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 109, 167, 0.4);
+            background-color: #3a5d97;
+        }
+
+        .vlog-icon {
+            margin-right: 8px;
+        }
+        
+        /* Responsive for notifications panel */
+        @media (max-width: 768px) {
+            .notifications-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .notifications-title {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Add this inside your styleMain.css or userDashboard.css */
+
+.navbar .dropdown .dropdown-content {
+    right: 0;
+    left: auto;
+    transform: translateX(-10%); /* Slightly nudge left to avoid cutoff */
+    white-space: nowrap;
+}
+
+/* Optional: Ensure it doesn't overflow the viewport */
+.navbar .dropdown .dropdown-content {
+    max-width: 200px;
+    overflow-x: auto;
+    box-sizing: border-box;
+}
+@media (max-width: 600px) {
+    .navbar .dropdown .dropdown-content {
+        left: auto;
+        right: 0;
+        transform: translateX(-20%);
+    }
+}
+
+        
+    </style>
+</body>
+</html>

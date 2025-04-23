@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boys Hostels</title>
+    <link rel="stylesheet" href="/boyshostel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- In <head> or before closing </body> -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+
+</head>
+<body>
+    <!-- Header copied from main.ejs -->
+    <header>
+        <div id="acc1st"> 
+            <div id="logoimg">
+                <img src="/logo.jpg" alt="logo">
+            </div>
+            <h1 id="accLetter">Accomodation</h1>
+        </div> 
+        
+        <div class="navbar">
+            <div onclick="location.href='/userdashboard'">Home</div>
+            <div><a href="/userdashboard#abc">About</a></div>
+            <div><a href="https://hostels.cusat.ac.in/">College Hostel</a></div>
+            <div class="dropdown">
+                <button class="dropbtn">Private Hostel</button>
+                <div class="dropdown-content">
+                    <div class="dropdown-item" onclick="location.href='/apartment'">Apartment</div>
+                    <div class="dropdown-item" onclick="location.href='/pg'">PG</div>
+                    <div class="dropdown-item" onclick="location.href='/boyshostel'">Boys Hostel</div>
+                    <div class="dropdown-item" onclick="location.href='/girlshostel'">Girls Hostel</div>
+                </div>
+            </div>
+            <div onclick="location.href='/matchroommates'">Room mate Matching</div>
+            <div id="signUpButton" onclick="location.href='/logout'">Login out</div>
+        </div>
+    </header>
+
+    <!-- Stylish Search + Filter Section -->
+    <section class="filter-section">
+        <input type="search" id="searchBox" placeholder="Search hostel...">
+
+        <label for="priceFilter">Max Price:</label>
+        <input type="number" id="priceFilter" placeholder="Enter max price">
+
+        <label for="sharingFilter">Sharing:</label>
+        <select id="sharingFilter">
+            <option value="">Any</option>
+            <option value="Single">Single</option>
+            <option value="Double">Double</option>
+            <option value="Triple">Triple</option>
+        </select>
+
+        <button id="filterBtn">Filter</button>
+    </section>
+
+    <main>
+        <form id="sortForm" method="GET" action="/boyshostel">
+            <label for="sort">Sort hostels by:</label>
+            <select name="sort" id="sort" onchange="document.getElementById('sortForm').submit()">
+                <option value="highest" <%= sort === 'highest' ? 'selected' : '' %>>Highest Rating</option>
+                <option value="lowest" <%= sort === 'lowest' ? 'selected' : '' %>>Lowest Rating</option>
+                <option value="distance" <%= sort === 'distance' ? 'selected' : '' %>>Closest Distance</option>
+
+            </select>
+        </form>  
+   
+        
+        <div id="hostel-list">
+            <% allHostel.forEach(hostel => { %>
+                <!-- <div class="hostel-card hostelClass" data-price="<%= hostel.price %>" data-sharing="<%= hostel.sharing %>"> -->
+                    <div class="hostel-card hostelClass" 
+                                data-price="<%= hostel.price %>" 
+                                data-sharing="<%= hostel.sharing %>" 
+                                data-lat="<%= hostel.latitude %>" 
+                                data-lng="<%= hostel.longitude %>">
+
+                    <h2><%= hostel.hostelName %></h2>
+                    <p><strong>Price:</strong> ₹<%= hostel.price %></p>
+                    <p><strong>Sharing:</strong> <%= hostel.sharing %></p>
+                    <p><strong>Address:</strong> <%= hostel.address %></p>
+                   
+                    
+                    <!-- Map Container ---------------------------------->
+                    <div class="map-container" id="map-<%= hostel._id %>" style="height: 200px;"></div>
+
+ 
+    
+                    <!-- Rating Section -->
+                    <% if (hostel.averageRating) { %>
+                        <p><strong>Average Rating:</strong>
+                            <% const fullStars = Math.floor(hostel.averageRating); %>
+                            <% const halfStar = hostel.averageRating % 1 >= 0.5; %>
+                            <% for (let i = 0; i < fullStars; i++) { %>
+                                <i class="fa fa-star" style="color: gold;"></i>
+                            <% } %>
+                            <% if (halfStar) { %>
+                                <i class="fa fa-star-half-o" style="color: gold;"></i>
+                            <% } %>
+                            (<%= hostel.averageRating %>/5)
+                        </p>
+                    <% } else { %>
+                        <p><strong>Average Rating:</strong> Not rated yet</p>
+                    <% } %>
+                    <button class="directions-btn view-more-btn" onclick="getDirections(<%= hostel.latitude %>, <%= hostel.longitude %>)">
+                        Get Directions
+                    </button>
+                    <a href="/hostel/<%= hostel._id %>" class="view-more-btn">View More Detail</a>
+                </div>
+            <% }); %>
+        </div>
+    </main>
+    
+    <!-- Leaflet CSS and JS -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="/hostelFeatures.js"></script>
+
+    <!-- Map Initialization for All Hostels.............................................................................. -->
+   
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            <% allHostel.forEach(hostel => { %>
+                <% if (hostel.latitude && hostel.longitude) { %>
+                    const map<%= hostel._id %> = L.map("map-<%= hostel._id %>").setView([<%= hostel.latitude %>, <%= hostel.longitude %>], 15);
+                    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                        attribution: '© OpenStreetMap'
+                    }).addTo(map<%= hostel._id %>);
+                    L.marker([<%= hostel.latitude %>, <%= hostel.longitude %>])
+                        .addTo(map<%= hostel._id %>)
+                        .bindPopup("<%= hostel.hostelName %>");
+                <% } %>
+            <% }); %>
+        });
+    < </script> -->
+    <!-- getting a user current location  --------------------------------------------------------------------------------------------->
+    <!-- <script> 
+     navigator.geolocation.getCurrentPosition(function(position) {
+    const userLat = position.coords.latitude;
+    const userLng = position.coords.longitude;
+
+    document.querySelectorAll('.hostel-card').forEach(card => {
+        const hostelLat = parseFloat(card.getAttribute('data-lat'));
+        const hostelLng = parseFloat(card.getAttribute('data-lng'));
+
+        if (!isNaN(hostelLat) && !isNaN(hostelLng)) {
+            const distance = getDistanceFromLatLonInKm(userLat, userLng, hostelLat, hostelLng);
+
+            // Save to attribute for sorting
+            card.setAttribute('data-distance', distance);
+
+            // Show distance on UI
+            const distanceElement = document.createElement('p');
+            distanceElement.textContent = `📍 Distance: ${distance.toFixed(2)} km`;
+            card.appendChild(distanceElement);
+        }
+    });
+
+    // Sort if user selected distance
+    const sortValue = document.getElementById('sort').value;
+    if (sortValue === 'distance') {
+        sortHostels();
+    }
+});
+
+        
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of Earth in km
+            const dLat = deg2rad(lat2-lat1);
+            const dLon = deg2rad(lon2-lon1);
+            const a =
+                Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+        function deg2rad(deg) {
+            return deg * (Math.PI/180);
+        }
+
+       // Function to sort hostels by distance (on frontend)
+       function sortHostels() {
+    const sortValue = document.getElementById('sort').value;
+    
+    // If user selects "distance", sort the hostels by distance
+    if (sortValue === 'distance') {
+        const hostelList = document.getElementById('hostel-list');
+        const hostels = Array.from(hostelList.getElementsByClassName('hostel-card'));
+        
+        hostels.sort((a, b) => {
+            const distanceA = parseFloat(a.getAttribute('data-distance'));
+            const distanceB = parseFloat(b.getAttribute('data-distance'));
+            
+            // Sort by distance (ascending order for closest first)
+            return distanceA - distanceB; // closest first
+        });
+        
+        // Reorder the hostel cards based on sorted distances
+        hostels.forEach(hostel => hostelList.appendChild(hostel));
+    }
+}
+
+        </script>
+
+          this is for getting direction 
+     
+            <script>
+                let userLat = null;
+                let userLng = null;
+            
+                // Try to get current location
+                window.onload = () => {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(
+                            (position) => {
+                                userLat = position.coords.latitude;
+                                userLng = position.coords.longitude;
+                                console.log("User Location:", userLat, userLng);
+                            },
+                            (error) => {
+                                alert("Could not get your location. Please allow location access.");
+                                console.error("Geolocation error:", error);
+                            }
+                        );
+                    } else {
+                        alert("Geolocation is not supported by your browser.");
+                    }
+                };
+            
+                function getDirections(hostelLat, hostelLng) {
+                    if (userLat && userLng) {
+                        const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${hostelLat},${hostelLng}`;
+                        window.open(url, "_blank");
+                    } else {
+                        alert("Still getting your location. Please wait a moment.");
+                    }
+                }
+            </script>
+                
+                 -->
+
+    </body>
+    </html>
+    

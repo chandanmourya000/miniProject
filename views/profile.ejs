@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile - Accommodation Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(to right, #990000, #0073e6);
+            --section-bg: #ffffff;
+            --text-primary: #333;
+            --text-secondary: #555;
+            --border-radius: 10px;
+            --box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            --accent-color: #0073e6;
+            --secondary-accent: #990000;
+            --success-color: #28a745;
+            --error-color: #dc3545;
+            --input-border: #ddd;
+            --input-focus: #0073e6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .form-header {
+            background: var(--primary-gradient);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-header::after {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        h1 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .form-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0;
+            font-size: 16px;
+        }
+        
+        .form-container {
+            background-color: var(--section-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--primary-gradient);
+        }
+        
+        .form-section {
+            margin-bottom: 30px;
+        }
+        
+        .form-section-title {
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 115, 230, 0.2);
+            position: relative;
+        }
+        
+        .form-section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 60px;
+            height: 2px;
+            background: var(--primary-gradient);
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .form-group {
+            flex: 1 0 250px;
+            margin: 0 10px 20px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            color: var(--text-primary);
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--input-focus);
+            box-shadow: 0 0 0 3px rgba(0, 115, 230, 0.1);
+            background-color: #fff;
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%230073e6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            padding-right: 40px;
+        }
+        
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-secondary {
+            background-color: #f0f0f0;
+            color: var(--text-primary);
+            margin-right: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e0e0e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .back-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        .input-icon {
+            position: absolute;
+            top: 40px;
+            left: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .icon-input {
+            padding-left: 40px;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .radio-item {
+            flex: 1 0 calc(50% - 15px);
+            position: relative;
+        }
+        
+        .radio-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .radio-item label {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: normal;
+            background-color: #f9f9f9;
+        }
+        
+        .radio-item input[type="radio"]:checked + label {
+            border-color: var(--accent-color);
+            background-color: rgba(0, 115, 230, 0.05);
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+        
+        .radio-item label:before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--input-border);
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .radio-item input[type="radio"]:checked + label:before {
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+            box-shadow: inset 0 0 0 3px white;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+                margin: 20px auto;
+            }
+            
+            .form-header, .form-container {
+                padding: 20px;
+            }
+            
+            .form-group {
+                flex: 1 0 100%;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            
+            .btn-secondary {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="<%= user && user.role === 'admin' ? '/admindashboard' : '/userdashboard' %>" class="back-link"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+        
+        <div class="form-header">
+            <h1>Update Your Profile</h1>
+            <p class="form-subtitle">Tell us about yourself to find your perfect roommate match</p>
+        </div>
+        
+        <form method="POST" action="/profile" class="form-container">
+            <div class="form-section">
+                <h2 class="form-section-title"><i class="fas fa-user-circle"></i> Personal Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactNumber"><i class="fas fa-phone"></i> Contact Number</label>
+                        <input type="text" id="contactNumber" name="contactNumber" pattern="\d{10}" maxlength="10" required placeholder="10-digit number">
+                        <small>Enter a valid 10-digit phone number</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="wantsRoommateMatching"><i class="fas fa-users"></i> Wants Roommate Matching</label>
+                        <select id="wantsRoommateMatching" name="wantsRoommateMatching">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2 class="form-section-title"><i class="fas fa-heart"></i> Lifestyle Preferences</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wakeUpTime"><i class="fas fa-clock"></i> Wake-up time</label>
+                        <select id="wakeUpTime" name="wakeUpTime">
+                            <option value="Early (Before 8 AM)">Early (Before 8 AM)</option>
+                            <option value="Late (After 8 AM)">Late (After 8 AM)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sleepTime"><i class="fas fa-moon"></i> Sleep time</label>
+                        <select id="sleepTime" name="sleepTime">
+                            <option value="Early (Before 11 PM)">Early (Before 11 PM)</option>
+                            <option value="Late (After 11 PM)">Late (After 11 PM)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="smoking"><i class="fas fa-smoking"></i> Smoking</label>
+                        <select id="smoking" name="smoking">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="drinking"><i class="fas fa-glass-cheers"></i> Drinking</label>
+                        <select id="drinking" name="drinking">
+                            <option value="false">No</option>
+                            <option value="true">Yes</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cleanliness"><i class="fas fa-broom"></i> Cleanliness</label>
+                        <select id="cleanliness" name="cleanliness">
+                            <option value="Neat & Oranized">Neat & Organized</option>
+                            <option value="Reasonably Tidy">Reasonably Tidy</option>
+                            <option value="Relaxed about Tidiness">Relaxed About Tidiness</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lifestyle"><i class="fas fa-home"></i> Lifestyle</label>
+                        <select id="lifestyle" name="lifestyle">
+                            <option value="Quiet & Peaceful">Quiet & Peaceful</option>
+                            <option value="Social & Outgoing">Social & Outgoing</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="diet"><i class="fas fa-utensils"></i> Diet</label>
+                        <select id="diet" name="diet">
+                            <option value="Veg">Vegetarian</option>
+                            <option value="Non-Veg">Non-Vegetarian</option>
+                            <option value="Vegan">Vegan</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="personality"><i class="fas fa-brain"></i> Personality</label>
+                        <select id="personality" name="personality">
+                            <option value="Introvert">Introvert</option>
+                            <option value="Ambivert">Ambivert</option>
+                            <option value="Extrovert">Extrovert</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()"><i class="fas fa-times"></i> Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Profile</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
