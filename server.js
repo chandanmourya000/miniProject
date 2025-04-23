@@ -42,7 +42,7 @@ app.use((req, res, next) => {
 // MongoDB Connection
 async function main() {
   try {
-    await mongoose.connect('mongodb://127.0.0.1:27017/test');
+     await mongoose.connect(process.env.MONGO_URI);
     console.log('✅ Successfully connected to the database!');
   } catch (err) {
     console.error('❌ Failed to connect to the database:', err);
